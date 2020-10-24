@@ -7,20 +7,13 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public interface HeaderExtractor {
+public class HeaderExtractor {
 
-    static Map<String, Collection<String>> extractHeaders(HttpServletRequest request) {
-        return Collections.list(request.getHeaderNames())
+    public HeaderAdapter extractHeaders(HttpServletRequest request) {
+        Map<String, Collection<String>> headers = Collections.list(request.getHeaderNames())
                 .stream()
                 .collect(Collectors.toMap(Function.identity(), header -> Collections.list(request.getHeaders(header))));
-    }
-
-    static Collection<String> extractValues(String name, Map<String, Collection<String>> headers) {
-        return headers.keySet().stream()
-                .filter(key -> key.equalsIgnoreCase(name))
-                .map(headers::get)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+        return new HeaderAdapter(headers);
     }
 
 }

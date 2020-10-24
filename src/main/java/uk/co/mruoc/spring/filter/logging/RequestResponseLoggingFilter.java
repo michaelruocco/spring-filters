@@ -3,7 +3,6 @@ package uk.co.mruoc.spring.filter.logging;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.slf4j.MDC;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
@@ -13,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -28,14 +26,13 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
-        Instant start = Instant.now();
         ContentCachingRequestWrapper wrappedRequest = wrap(request);
         ContentCachingResponseWrapper wrappedResponse = wrap(response);
         logRequest(wrappedRequest);
         try {
             chain.doFilter(wrappedRequest, wrappedResponse);
         } finally {
-            logResponse(wrappedResponse, DurationCalculator.millisBetweenNowAnd(start));
+            logResponse(wrappedResponse);
         }
     }
 
@@ -48,14 +45,10 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
     }
 
     private void logRequest(ContentCachingRequestWrapper request) throws IOException {
-        MDC.put("method", request.getMethod());
-        MDC.put("uri", request.getRequestURI());
         log.info("received-request:{}:headers:{}", extractBody(request), extractHeaders(request));
     }
 
-    private void logResponse(ContentCachingResponseWrapper response, long duration) throws IOException {
-        MDC.put("duration", Long.toString(duration));
-        MDC.put("http-status", Integer.toString(response.getStatus()));
+    private void logResponse(ContentCachingResponseWrapper response) throws IOException {
         log.info("returned-response:{}:headers:{}", extractBody(response), extractHeaders(response));
         response.copyBodyToResponse();
     }

@@ -2,7 +2,10 @@ package uk.co.mruoc.spring.filter.logging;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.MDC;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import uk.co.mruoc.spring.filter.HeaderAdapter;
+import uk.co.mruoc.spring.filter.HeaderExtractor;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -11,38 +14,35 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Map;
-
-import static uk.co.mruoc.spring.filter.HeaderExtractor.extractHeaders;
-import static uk.co.mruoc.spring.filter.HeaderExtractor.extractValues;
 
 @RequiredArgsConstructor
 public class HeaderMdcPopulatorFilter extends OncePerRequestFilter {
 
-    private final Collection<String> headerNames;
+    private final Collection<String> names;
+    private final HeaderExtractor extractor;
 
-    public HeaderMdcPopulatorFilter() {
-        this(Arrays.asList("correlation-id", "channel-id"));
+    public HeaderMdcPopulatorFilter(String... names) {
+        this(Arrays.asList(names), new HeaderExtractor());
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws IOException, ServletException {
-        populateMdc(extractHeaders(request));
+        populateMdc(extractor.extractHeaders(request));
         chain.doFilter(request, response);
     }
 
-    private void populateMdc(Map<String, Collection<String>> headers) {
-        headerNames.forEach(name -> populateMdc(name, headers));
+    private void populateMdc(HeaderAdapter headers) {
+        names.forEach(name -> populateMdcIfPresent(name, headers));
     }
 
-    private void populateMdc(String name, Map<String, Collection<String>> headers) {
-        Collection<String> values = extractValues(name, headers);
-        if (values.isEmpty()) {
+    private void populateMdcIfPresent(String name, HeaderAdapter headers) {
+        String value = headers.getAsString(name);
+        if (StringUtils.isEmpty(value)) {
             return;
         }
-        MDC.put(name, String.join(",", values));
+        MDC.put(name.toLowerCase(), value);
     }
 
 }

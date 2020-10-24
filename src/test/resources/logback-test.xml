@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %p [%X{my-header-1}:%X{my-header-2}:%X{request-method}:%X{request-uri}:%X{request-duration}:%X{http-status}:%X{transformed-request-uri}] %m%n
+            </Pattern>
+        </layout>
+    </appender>
+    <root level="info">
+        <appender-ref ref="Console" />
+    </root>
+</configuration>
