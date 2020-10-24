@@ -24,10 +24,7 @@ plugins {
 group "com.github.michaelruocco"
 
 scmVersion {
-    branchVersionCreator = [
-            "release": "simple",
-            ".*": "versionWithBranch"
-    ]
+    versionCreator "versionWithBranch"
     tag {
         prefix = "spring-filters"
     }
