@@ -29,7 +29,7 @@ stages:
   - name: build
 
   - name: snapshot
-    if: branch != master
+    if: branch != release
 
   - name: release
     if: branch = release
