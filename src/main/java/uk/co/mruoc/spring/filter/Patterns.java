@@ -4,10 +4,10 @@ import java.util.regex.Pattern;
 
 public class Patterns {
 
+    public static final Pattern UUID = Pattern.compile(Regexs.UUID);
+
     private Patterns() {
         // utility class
     }
-
-    public static final Pattern UUID = Pattern.compile(Regexs.UUID);
 
 }
