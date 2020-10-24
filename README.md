@@ -8,6 +8,7 @@
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_spring-filters&metric=sqale_index)](https://sonarcloud.io/dashboard?id=michaelruocco_spring-filters)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_spring-filters&metric=coverage)](https://sonarcloud.io/dashboard?id=michaelruocco_spring-filters)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_spring-filters&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_spring-filters)
+[![Download](https://api.bintray.com/packages/michaelruocco/maven/spring-filters/images/download.svg) ](https://bintray.com/michaelruocco/maven/spring-filters/_latestVersion)
 
 ## Overview
 
