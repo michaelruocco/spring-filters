@@ -1,4 +1,4 @@
-package uk.co.mruoc.spring.filter.logging;
+package uk.co.mruoc.spring.filter.logging.requestresponse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +19,6 @@ import java.time.Instant;
 public class RequestResponseMdcPopulatorFilter extends OncePerRequestFilter {
 
     private final Clock clock;
-
-    public RequestResponseMdcPopulatorFilter() {
-        this(Clock.systemUTC());
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

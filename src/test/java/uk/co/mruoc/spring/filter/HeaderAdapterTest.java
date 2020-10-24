@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 class HeaderAdapterTest {
 
@@ -19,6 +20,7 @@ class HeaderAdapterTest {
     private static final String VALUE_1 = "value1";
     private static final String VALUE_2 = "value2";
     private static final String VALUE_1_AND_2 = String.format("%s,%s", VALUE_1, VALUE_2);
+    private static final String VALUE_3 = "value3";
 
     @Test
     void shouldReturnSize() {
@@ -104,10 +106,22 @@ class HeaderAdapterTest {
         assertThat(value).isEqualTo(VALUE_1_AND_2);
     }
 
+    @Test
+    void shouldReturnHeadersAsMap() {
+        HeaderAdapter headers = new HeaderAdapter(buildValues());
+
+        Map<String, Collection<String>> map = headers.asMap();
+
+        assertThat(map).contains(
+                entry(HEADER_NAME_1.toLowerCase(), Arrays.asList(VALUE_1, VALUE_2)),
+                entry(HEADER_NAME_2.toLowerCase(), Collections.singleton(VALUE_3))
+        );
+    }
+
     private static Map<String, Collection<String>> buildValues() {
         return Map.of(
                 HEADER_NAME_1, Arrays.asList(VALUE_1, VALUE_2),
-                HEADER_NAME_2, Collections.singleton("value3")
+                HEADER_NAME_2, Collections.singleton(VALUE_3)
         );
     }
 

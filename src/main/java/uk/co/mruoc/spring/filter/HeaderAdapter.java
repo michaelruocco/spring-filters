@@ -34,4 +34,8 @@ public class HeaderAdapter {
         return String.join(",", get(name));
     }
 
+    public Map<String, Collection<String>> asMap() {
+        return Collections.unmodifiableMap(values);
+    }
+
 }

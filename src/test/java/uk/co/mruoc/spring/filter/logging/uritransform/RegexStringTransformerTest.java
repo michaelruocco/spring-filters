@@ -1,4 +1,4 @@
-package uk.co.mruoc.spring.filter.logging;
+package uk.co.mruoc.spring.filter.logging.uritransform;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.spring.filter.Patterns;

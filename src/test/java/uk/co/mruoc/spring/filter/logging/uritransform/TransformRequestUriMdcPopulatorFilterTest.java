@@ -1,4 +1,4 @@
-package uk.co.mruoc.spring.filter.logging;
+package uk.co.mruoc.spring.filter.logging.uritransform;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static uk.co.mruoc.logging.LogOutputGenerator.generateLogOutput;
-import static uk.co.mruoc.spring.filter.logging.TransformRequestUriMdcPopulatorFilter.compose;
+import static uk.co.mruoc.spring.filter.logging.uritransform.TransformRequestUriMdcPopulatorFilter.compose;
 
 class TransformRequestUriMdcPopulatorFilterTest {
 
