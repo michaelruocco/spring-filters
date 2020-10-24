@@ -2,12 +2,6 @@ sudo: false
 language: java
 jdk: openjdk11
 
-#addons:
-#  sonarcloud:
-#    organization: "michaelruocco"
-#    token:
-#      secure: "SN4S5T/fgCDYXKUa6GfCAwdaqSDZkpTfmblUZ4jZ8z0TuOuynYGjd/Kk51GeQhC7+OgJk2GemEFiGQVq/G2P4k7GroZfG/tQ4AgGr7EdXkyDgGZxOOHYuKCoudOTsIAMb/ekhvdPdHF5KSCru03m/U7javS5mSwEcf/wUMskqX9RBCh/PuNSUrgHD9o6ddDdrx8mxTHw+9NxgKS8IS6jUT8SOr/u/fts6tyi2WMN7V8dqRnppoaLhbY2PYCP+VDwebwzH8eV8nzsmRmdGTENz3bM+FUQqKxSoOYASVDlNINB4HrNrmmlmY+t6FLlIUZH13Af24e7CRdWDoDXr8j2wxY5HbtgYuebqrEwoi1gfmYQftSxhDoe5hYjXVBcjs1vZsH8HNxYJvABzgl/jkv2EijzDOvTTZJw0ANxCknsh9wOm1ZDOJOCHGMKXo7cqFJgFSvjrctfNAUsg7ikPQsrc2zbGPPRv0ToyS4i9hWobdbo8gWDnvoTNKJO2eRkgi1c2nWXDJSJy7Kn/8TjOruN/NsDpHTnLVBb/6YaaLofYKbtFQBejdmpdnjPl0u8Xo5TSGlrt0D+OlCze/a/AvbXNwo8c6I9qRVV4vEolSXEzL/MG4+8L8eUbrQadw7miaO4Y5zUI+FUueph105Fh2dYYLs3mCgMNRyVBtSLO5ybcYI="
-
 branches:
   except:
     - /^spring-filters-*/
@@ -37,7 +31,7 @@ stages:
 jobs:
   include:
     - stage: build
-      script: ./gradlew clean spotlessCheck build integrationTest jacocoTestReport sonarqube
+      script: ./gradlew clean currentVersion spotlessCheck build integrationTest dependencyUpdates jacocoTestReport
 
     - stage: snapshot
       script: ./gradlew artifactoryPublish -Dbuild.number=$TRAVIS_BUILD_NUMBER
