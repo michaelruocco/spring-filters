@@ -5,7 +5,7 @@ import org.slf4j.MDC;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import uk.co.mruoc.spring.filter.HeaderAdapter;
-import uk.co.mruoc.spring.filter.HeaderExtractor;
+import uk.co.mruoc.spring.filter.RequestHeaderExtractor;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -19,10 +19,10 @@ import java.util.Collection;
 public class HeaderMdcPopulatorFilter extends OncePerRequestFilter {
 
     private final Collection<String> names;
-    private final HeaderExtractor extractor;
+    private final RequestHeaderExtractor extractor;
 
     public HeaderMdcPopulatorFilter(String... names) {
-        this(Arrays.asList(names), new HeaderExtractor());
+        this(Arrays.asList(names), new RequestHeaderExtractor());
     }
 
     @Override

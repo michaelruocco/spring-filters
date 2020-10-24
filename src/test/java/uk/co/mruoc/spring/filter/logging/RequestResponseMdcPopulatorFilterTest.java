@@ -1,4 +1,4 @@
-package uk.co.mruoc.spring.filter.logging.requestresponse;
+package uk.co.mruoc.spring.filter.logging;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static uk.co.mruoc.logging.LogOutputGenerator.generateLogOutput;
+import static uk.co.mruoc.logging.LogOutputUtils.generateLogOutput;
 
 class RequestResponseMdcPopulatorFilterTest {
 

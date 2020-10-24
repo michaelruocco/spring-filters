@@ -1,4 +1,4 @@
-package uk.co.mruoc.spring.filter.logging.requestresponse;
+package uk.co.mruoc.spring.filter.logging;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

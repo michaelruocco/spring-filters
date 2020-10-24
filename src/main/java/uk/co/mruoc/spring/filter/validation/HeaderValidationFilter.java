@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import uk.co.mruoc.spring.filter.HeaderAdapter;
-import uk.co.mruoc.spring.filter.HeaderExtractor;
+import uk.co.mruoc.spring.filter.RequestHeaderExtractor;
 import uk.co.mruoc.spring.filter.validation.validator.HeaderValidator;
 
 import javax.servlet.FilterChain;
@@ -18,10 +18,10 @@ public class HeaderValidationFilter extends OncePerRequestFilter {
 
     private final HeaderValidator validator;
     private final HandlerExceptionResolver resolver;
-    private final HeaderExtractor extractor;
+    private final RequestHeaderExtractor extractor;
 
     public HeaderValidationFilter(HeaderValidator validator, HandlerExceptionResolver resolver) {
-        this(validator, resolver, new HeaderExtractor());
+        this(validator, resolver, new RequestHeaderExtractor());
     }
 
     @Override

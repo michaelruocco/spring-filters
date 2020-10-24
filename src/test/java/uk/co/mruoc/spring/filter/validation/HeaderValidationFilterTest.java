@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import uk.co.mruoc.spring.filter.HeaderAdapter;
-import uk.co.mruoc.spring.filter.HeaderExtractor;
+import uk.co.mruoc.spring.filter.RequestHeaderExtractor;
 import uk.co.mruoc.spring.filter.validation.validator.CompositeHeaderValidator;
 
 import javax.servlet.Filter;
@@ -25,7 +25,7 @@ class HeaderValidationFilterTest {
 
     private final CompositeHeaderValidator validator = mock(CompositeHeaderValidator.class);
     private final HandlerExceptionResolver resolver = mock(HandlerExceptionResolver.class);
-    private final HeaderExtractor extractor = mock(HeaderExtractor.class);
+    private final RequestHeaderExtractor extractor = mock(RequestHeaderExtractor.class);
 
     private final Filter filter = new HeaderValidationFilter(validator, resolver, extractor);
 

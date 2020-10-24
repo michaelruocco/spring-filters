@@ -33,6 +33,7 @@ project.version = scmVersion.version
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 ext {
@@ -57,6 +58,7 @@ dependencies {
     implementation "org.slf4j:slf4j-api:${slf4jVersion}"
     implementation "commons-io:commons-io:2.8.0"
     implementation "org.apache.commons:commons-collections4:4.4"
+    implementation "com.github.michaelruocco:json-masker:0.1.7"
 
     testImplementation "org.springframework.boot:spring-boot-starter-web:${springVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"

@@ -1,7 +1,6 @@
-package uk.co.mruoc.spring.filter.logging.requestresponse;
+package uk.co.mruoc.spring.filter.logging.response;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 import org.springframework.web.util.WebUtils;
 
@@ -10,22 +9,11 @@ import java.io.IOException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-class BodyExtractorTest {
+class SimpleResponseBodyExtractorTest {
 
-    private final BodyExtractor extractor = new BodyExtractor();
-
-    @Test
-    void shouldReturnRequestBody() throws IOException {
-        String content = "request-body";
-        ContentCachingRequestWrapper request = mock(ContentCachingRequestWrapper.class);
-        given(request.getContentAsByteArray()).willReturn(content.getBytes());
-        given(request.getCharacterEncoding()).willReturn(WebUtils.DEFAULT_CHARACTER_ENCODING);
-
-        String body = extractor.extractBody(request);
-
-        assertThat(body).isEqualTo(content);
-    }
+    private final ResponseBodyExtractor extractor = new SimpleResponseBodyExtractor();
 
     @Test
     void shouldReturnResponseBody() throws IOException {
@@ -37,6 +25,7 @@ class BodyExtractorTest {
         String body = extractor.extractBody(response);
 
         assertThat(body).isEqualTo(content);
+        verify(response).copyBodyToResponse();
     }
 
 }

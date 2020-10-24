@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
 import uk.co.mruoc.spring.filter.HeaderAdapter;
-import uk.co.mruoc.spring.filter.HeaderExtractor;
+import uk.co.mruoc.spring.filter.RequestHeaderExtractor;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static uk.co.mruoc.logging.LogOutputGenerator.generateLogOutput;
+import static uk.co.mruoc.logging.LogOutputUtils.generateLogOutput;
 
 @Slf4j
 class HeaderMdcPopulatorFilterTest {
@@ -33,7 +33,7 @@ class HeaderMdcPopulatorFilterTest {
     private final FilterChain chain = mock(FilterChain.class);
 
     private final Collection<String> names = Arrays.asList(NAME_1, NAME_2);
-    private final HeaderExtractor extractor = mock(HeaderExtractor.class);
+    private final RequestHeaderExtractor extractor = mock(RequestHeaderExtractor.class);
 
     private final Filter filter = new HeaderMdcPopulatorFilter(names, extractor);
 
