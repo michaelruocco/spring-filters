@@ -26,7 +26,7 @@ stages:
     if: branch != master
 
   - name: release
-    if: branch = master
+    if: branch = release
 
 jobs:
   include:
