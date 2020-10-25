@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
 import uk.co.mruoc.clock.FixedTimesClock;
+import uk.co.mruoc.logging.LogOutputUtils;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
@@ -86,6 +88,19 @@ class RequestMdcPopulatorFilterTest {
         String expectedOutput = String.format("INFO [::::1000:%s:] test log message", status);
         assertThat(generateLogOutput()).isEqualToIgnoringWhitespace(expectedOutput);
         assertThat(MDC.getCopyOfContextMap()).contains(entry("request-status", status));
+    }
+
+    @Test
+    void shouldLogCompletionMessage() throws Exception {
+        given(request.getMethod()).willReturn("POST");
+        given(request.getRequestURI()).willReturn("/my-resources");
+        given(response.getStatus()).willReturn(404);
+
+        Collection<String> logLines = LogOutputUtils.captureLogLines(() -> filter.doFilter(request, response, chain));
+
+        assertThat(logLines).contains(
+                "INFO [::POST:/my-resources:1000:404:] POST /my-resources took 1000ms to return status 404"
+        );
     }
 
 }
