@@ -30,7 +30,7 @@ public class RequestMdcPopulatorFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
         } finally {
             populateValues(response, millisBetweenNowAnd(start));
-            log.info("populated mdc request values");
+            log.info("request completed");
         }
     }
 
