@@ -50,7 +50,7 @@ public class RequestMdcPopulatorFilter extends OncePerRequestFilter {
     }
 
     private String toCompletionMessage(HttpServletRequest request, HttpServletResponse response, long duration) {
-        return String.format("{} {} took {}ms to return status {} ",
+        return String.format("%s %s took %dms to return status %d ",
                 request.getMethod(),
                 request.getRequestURI(),
                 duration,
