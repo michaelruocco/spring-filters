@@ -19,7 +19,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static uk.co.mruoc.logging.LogOutputUtils.generateLogOutput;
 
-class RequestResponseMdcPopulatorFilterTest {
+class RequestMdcPopulatorFilterTest {
 
     private static final Duration DURATION = Duration.ofSeconds(1);
     private static final Instant NOW = Instant.now();
@@ -29,7 +29,7 @@ class RequestResponseMdcPopulatorFilterTest {
     private final FilterChain chain = mock(FilterChain.class);
 
     private final FixedTimesClock clock = new FixedTimesClock(NOW, NOW.plus(DURATION));
-    private final Filter filter = new RequestResponseMdcPopulatorFilter(clock);
+    private final Filter filter = new RequestMdcPopulatorFilter(clock);
 
     @BeforeEach
     public void setUp() {
@@ -85,7 +85,7 @@ class RequestResponseMdcPopulatorFilterTest {
 
         String expectedOutput = String.format("INFO [::::1000:%s:] test log message", status);
         assertThat(generateLogOutput()).isEqualToIgnoringWhitespace(expectedOutput);
-        assertThat(MDC.getCopyOfContextMap()).contains(entry("http-status", status));
+        assertThat(MDC.getCopyOfContextMap()).contains(entry("request-status", status));
     }
 
 }

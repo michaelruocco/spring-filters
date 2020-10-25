@@ -16,7 +16,7 @@ import java.time.Instant;
 
 @Slf4j
 @RequiredArgsConstructor
-public class RequestResponseMdcPopulatorFilter extends OncePerRequestFilter {
+public class RequestMdcPopulatorFilter extends OncePerRequestFilter {
 
     private final Clock clock;
 
@@ -30,6 +30,7 @@ public class RequestResponseMdcPopulatorFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
         } finally {
             populateValues(response, millisBetweenNowAnd(start));
+            log.info("populated mdc request values");
         }
     }
 
@@ -40,7 +41,7 @@ public class RequestResponseMdcPopulatorFilter extends OncePerRequestFilter {
 
     private void populateValues(HttpServletResponse response, long duration) {
         MDC.put("request-duration", Long.toString(duration));
-        MDC.put("http-status", Integer.toString(response.getStatus()));
+        MDC.put("request-status", Integer.toString(response.getStatus()));
     }
 
     private long millisBetweenNowAnd(Instant start) {

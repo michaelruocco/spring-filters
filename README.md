@@ -17,11 +17,11 @@ This library contains filters which can be useful when building restful web appl
 ## Useful Commands
 
 ```gradle
-// formats code, builds code, runs tests
-./gradlew clean spotlessApply build
-```
-
-```gradle
-// check that dependencies are up to date
-./gradlew dependencyUpdates
+// cleans build directories
+// prints currentVersion
+// formats code
+// builds code
+// runs tests
+// checks dependency versions
+./gradlew clean currentVersion spotlessApply build dependencyUpdates
 ```
