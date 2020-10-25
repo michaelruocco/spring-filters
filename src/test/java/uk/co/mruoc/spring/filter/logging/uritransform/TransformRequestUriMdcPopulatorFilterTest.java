@@ -30,12 +30,8 @@ class TransformRequestUriMdcPopulatorFilterTest {
     ));
 
     @BeforeEach
-    public void setUp() {
-        MDC.clear();
-    }
-
     @AfterEach
-    public void tearDown() {
+    public void clearMdc() {
         MDC.clear();
     }
 

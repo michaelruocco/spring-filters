@@ -34,12 +34,8 @@ class RequestMdcPopulatorFilterTest {
     private final Filter filter = new RequestMdcPopulatorFilter(clock);
 
     @BeforeEach
-    public void setUp() {
-        MDC.clear();
-    }
-
     @AfterEach
-    public void tearDown() {
+    public void clearMdc() {
         MDC.clear();
     }
 

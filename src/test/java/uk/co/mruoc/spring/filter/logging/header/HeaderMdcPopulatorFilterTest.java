@@ -38,12 +38,8 @@ class HeaderMdcPopulatorFilterTest {
     private final Filter filter = new HeaderMdcPopulatorFilter(names, extractor);
 
     @BeforeEach
-    public void setUp() {
-        MDC.clear();
-    }
-
     @AfterEach
-    public void tearDown() {
+    public void clearMdc() {
         MDC.clear();
     }
 
