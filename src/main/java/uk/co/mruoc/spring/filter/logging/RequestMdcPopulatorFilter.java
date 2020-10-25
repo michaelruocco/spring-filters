@@ -29,8 +29,9 @@ public class RequestMdcPopulatorFilter extends OncePerRequestFilter {
             populateValues(request);
             chain.doFilter(request, response);
         } finally {
-            populateValues(response, millisBetweenNowAnd(start));
-            log.info("request completed");
+            long duration = millisBetweenNowAnd(start);
+            populateValues(response, duration);
+            log.info(toCompletionMessage(request, response, duration));
         }
     }
 
@@ -48,4 +49,12 @@ public class RequestMdcPopulatorFilter extends OncePerRequestFilter {
         return Duration.between(start, clock.instant()).toMillis();
     }
 
+    private String toCompletionMessage(HttpServletRequest request, HttpServletResponse response, long duration) {
+        return String.format("{} {} took {}ms to return status {} ",
+                request.getMethod(),
+                request.getRequestURI(),
+                duration,
+                response.getStatus()
+        );
+    }
 }
