@@ -11,13 +11,17 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JsonMaskingResponseBodyExtractor implements ResponseBodyExtractor {
 
-    private final JsonMasker jsonMasker;
+    private final JsonMasker masker;
     private final ResponseBodyExtractor extractor;
+
+    public JsonMaskingResponseBodyExtractor(JsonMasker masker) {
+        this(masker, new SimpleResponseBodyExtractor());
+    }
 
     @Override
     public String extractBody(ContentCachingResponseWrapper response) throws IOException {
         String body = extractor.extractBody(response);
-        return jsonMasker.mask(body);
+        return masker.mask(body);
     }
 
 }

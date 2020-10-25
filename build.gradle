@@ -63,7 +63,7 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-starter-web:${springVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
-    testImplementation "org.assertj:assertj-core:3.17.2"
+    testImplementation "org.assertj:assertj-core:3.18.0"
     testImplementation "org.mockito:mockito-core:3.5.15"
 
     testFixturesApi "com.github.stefanbirkner:system-lambda:1.1.1"
