@@ -13,7 +13,7 @@ public class SimpleRequestBodyExtractor implements RequestBodyExtractor {
 
     @Override
     public String extractBody(ContentCachingRequestWrapper request) throws IOException {
-        return IOUtils.toString(request.getContentAsByteArray(), request.getCharacterEncoding());
+        return IOUtils.toString(request.getInputStream(), request.getCharacterEncoding());
     }
 
 }
