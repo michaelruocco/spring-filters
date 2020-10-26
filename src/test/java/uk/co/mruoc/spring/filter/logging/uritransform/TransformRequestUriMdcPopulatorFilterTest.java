@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static uk.co.mruoc.logging.LogOutputUtils.generateLogOutput;
-import static uk.co.mruoc.spring.filter.logging.uritransform.TransformRequestUriMdcPopulatorFilter.compose;
+import static uk.co.mruoc.spring.filter.logging.StringFunctionComposer.compose;
 
 class TransformRequestUriMdcPopulatorFilterTest {
 

@@ -10,11 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
-import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,7 +19,7 @@ public class TransformRequestUriMdcPopulatorFilter extends OncePerRequestFilter 
     private static final String DEFAULT_NAME = "transformed-request-uri";
 
     private final String name;
-    private final Function<String, String> transformer;
+    private final UnaryOperator<String> transformer;
 
     public TransformRequestUriMdcPopulatorFilter(UnaryOperator<String> transformer) {
         this(DEFAULT_NAME, transformer);
@@ -43,19 +39,6 @@ public class TransformRequestUriMdcPopulatorFilter extends OncePerRequestFilter 
 
     private String transform(String uri) {
         return transformer.apply(uri);
-    }
-
-    @SafeVarargs
-    public static UnaryOperator<String> compose(Function<String, String>... functions) {
-        return compose(Arrays.asList(functions));
-    }
-
-    public static UnaryOperator<String> compose(Collection<Function<String, String>> functions) {
-        return compose(functions.stream());
-    }
-
-    public static UnaryOperator<String> compose(Stream<Function<String, String>> functions) {
-        return functions.reduce(Function.identity(), Function::compose)::apply;
     }
 
 }

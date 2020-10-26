@@ -9,6 +9,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_spring-filters&metric=coverage)](https://sonarcloud.io/dashboard?id=michaelruocco_spring-filters)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_spring-filters&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_spring-filters)
 [![Download](https://api.bintray.com/packages/michaelruocco/maven/spring-filters/images/download.svg) ](https://bintray.com/michaelruocco/maven/spring-filters/_latestVersion)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.michaelruocco/spring-filters.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.michaelruocco%22%20AND%20a:%22spring-filters%22)
 
 ## Overview
 

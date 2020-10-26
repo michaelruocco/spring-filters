@@ -5,6 +5,7 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 import uk.co.mruoc.json.mask.JsonMasker;
 
 import java.io.IOException;
+import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -12,7 +13,7 @@ import static org.mockito.Mockito.mock;
 
 class JsonMaskingResponseBodyExtractorTest {
 
-    private final JsonMasker masker = mock(JsonMasker.class);
+    private final UnaryOperator<String> masker = mock(JsonMasker.class);
     private final ResponseBodyExtractor extractor = mock(ResponseBodyExtractor.class);
 
     private final ResponseBodyExtractor maskingExtractor = new JsonMaskingResponseBodyExtractor(masker, extractor);
@@ -36,7 +37,7 @@ class JsonMaskingResponseBodyExtractorTest {
 
     private String givenBodyMaskedTo(String body) {
         String maskedBody = "masked-body";
-        given(masker.mask(body)).willReturn(maskedBody);
+        given(masker.apply(body)).willReturn(maskedBody);
         return maskedBody;
     }
 
