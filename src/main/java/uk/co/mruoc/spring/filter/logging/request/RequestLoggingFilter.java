@@ -3,7 +3,6 @@ package uk.co.mruoc.spring.filter.logging.request;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 import uk.co.mruoc.spring.filter.HeaderAdapter;
 import uk.co.mruoc.spring.filter.RequestHeaderExtractor;
 
@@ -29,12 +28,12 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
-        ContentCachingRequestWrapper wrappedRequest = wrapper.wrap(request);
+        CachedBodyHttpServletRequestWrapper wrappedRequest = wrapper.wrap(request);
         logRequest(wrappedRequest);
         chain.doFilter(wrappedRequest, response);
     }
 
-    private void logRequest(ContentCachingRequestWrapper request) throws IOException {
+    private void logRequest(HttpServletRequest request) throws IOException {
         HeaderAdapter headers = extractor.extractHeaders(request);
         String body = bodyExtractor.extractBody(request);
         log.info("received-request:{}:headers:{}", body, headers.asMap());

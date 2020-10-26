@@ -1,7 +1,6 @@
 package uk.co.mruoc.spring.filter.logging.request;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +15,7 @@ class RequestWrapperTest {
     void shouldWrapRequest() {
         HttpServletRequest request = mock(HttpServletRequest.class);
 
-        ContentCachingRequestWrapper wrapped = wrapper.wrap(request);
+        CachedBodyHttpServletRequestWrapper wrapped = wrapper.wrap(request);
 
         assertThat(wrapped.getRequest()).isEqualTo(request);
     }

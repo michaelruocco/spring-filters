@@ -1,11 +1,11 @@
 package uk.co.mruoc.spring.filter.logging.request;
 
-import org.springframework.web.util.ContentCachingRequestWrapper;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public interface RequestBodyExtractor {
 
-    String extractBody(ContentCachingRequestWrapper request) throws IOException;
+    String extractBody(HttpServletRequest request) throws IOException;
 
 }

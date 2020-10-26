@@ -1,7 +1,6 @@
 package uk.co.mruoc.spring.filter.logging.request;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 import uk.co.mruoc.spring.filter.HeaderAdapter;
 import uk.co.mruoc.spring.filter.RequestHeaderExtractor;
 
@@ -33,7 +32,7 @@ class RequestLoggingFilterTest {
 
     @Test
     void shouldLogEmptyRequestHeaders() throws Exception {
-        ContentCachingRequestWrapper wrappedRequest = givenWrapped(request);
+        CachedBodyHttpServletRequestWrapper wrappedRequest = givenWrapped(request);
         givenHeaders(wrappedRequest);
         givenBody(wrappedRequest);
 
@@ -46,7 +45,7 @@ class RequestLoggingFilterTest {
 
     @Test
     void shouldLogRequestHeaders() throws Exception {
-        ContentCachingRequestWrapper wrappedRequest = givenWrapped(request);
+        CachedBodyHttpServletRequestWrapper wrappedRequest = givenWrapped(request);
         HeaderAdapter requestHeaders = givenHeaders(wrappedRequest);
         given(requestHeaders.asMap()).willReturn(Map.of("Request-Header", Collections.singleton("requestValue")));
         givenBody(wrappedRequest);
@@ -58,19 +57,19 @@ class RequestLoggingFilterTest {
         );
     }
 
-    private ContentCachingRequestWrapper givenWrapped(HttpServletRequest request) {
-        ContentCachingRequestWrapper wrapped = mock(ContentCachingRequestWrapper.class);
+    private CachedBodyHttpServletRequestWrapper givenWrapped(HttpServletRequest request) {
+        CachedBodyHttpServletRequestWrapper wrapped = mock(CachedBodyHttpServletRequestWrapper.class);
         given(wrapper.wrap(request)).willReturn(wrapped);
         return wrapped;
     }
 
-    private HeaderAdapter givenHeaders(ContentCachingRequestWrapper request) {
+    private HeaderAdapter givenHeaders(HttpServletRequest request) {
         HeaderAdapter headers = mock(HeaderAdapter.class);
         given(headerExtractor.extractHeaders(request)).willReturn(headers);
         return headers;
     }
 
-    private void givenBody(ContentCachingRequestWrapper request) throws IOException {
+    private void givenBody(HttpServletRequest request) throws IOException {
         String body = "request-body";
         given(bodyExtractor.extractBody(request)).willReturn(body);
     }

@@ -2,8 +2,8 @@ package uk.co.mruoc.spring.filter.logging.request;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.function.UnaryOperator;
 
@@ -19,7 +19,7 @@ public class JsonMaskingRequestBodyExtractor implements RequestBodyExtractor {
     }
 
     @Override
-    public String extractBody(ContentCachingRequestWrapper request) throws IOException {
+    public String extractBody(HttpServletRequest request) throws IOException {
         String body = extractor.extractBody(request);
         return masker.apply(body);
     }
