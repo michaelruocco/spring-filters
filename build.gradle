@@ -59,7 +59,7 @@ dependencies {
     implementation "org.slf4j:slf4j-api:${slf4jVersion}"
     implementation "commons-io:commons-io:2.8.0"
     implementation "org.apache.commons:commons-collections4:4.4"
-    implementation "com.github.michaelruocco:json-masker:1.0.3-feature-allow-custom-value-maskers-SNAPSHOT"
+    implementation "com.github.michaelruocco:json-masker:1.0.2"
 
     testImplementation "org.springframework.boot:spring-boot-starter-web:${springVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
