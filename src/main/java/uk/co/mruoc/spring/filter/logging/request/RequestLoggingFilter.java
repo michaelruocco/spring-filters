@@ -28,7 +28,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
-        CachedBodyHttpServletRequestWrapper wrappedRequest = wrapper.wrap(request);
+        HttpServletRequest wrappedRequest = wrapper.wrapIfHasContent(request);
         logRequest(wrappedRequest);
         chain.doFilter(wrappedRequest, response);
     }

@@ -59,7 +59,7 @@ class RequestLoggingFilterTest {
 
     private CachedBodyHttpServletRequestWrapper givenWrapped(HttpServletRequest request) {
         CachedBodyHttpServletRequestWrapper wrapped = mock(CachedBodyHttpServletRequestWrapper.class);
-        given(wrapper.wrap(request)).willReturn(wrapped);
+        given(wrapper.wrapIfHasContent(request)).willReturn(wrapped);
         return wrapped;
     }
 
