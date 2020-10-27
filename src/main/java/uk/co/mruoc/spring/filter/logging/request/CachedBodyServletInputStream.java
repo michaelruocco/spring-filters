@@ -1,5 +1,6 @@
 package uk.co.mruoc.spring.filter.logging.request;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ReadListener;
@@ -9,12 +10,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Slf4j
+@RequiredArgsConstructor
 public class CachedBodyServletInputStream extends ServletInputStream {
 
     private final InputStream inputStream;
 
     public CachedBodyServletInputStream(byte[] bytes) {
-        this.inputStream = new ByteArrayInputStream(bytes);
+        this(new ByteArrayInputStream(bytes));
     }
 
     @Override

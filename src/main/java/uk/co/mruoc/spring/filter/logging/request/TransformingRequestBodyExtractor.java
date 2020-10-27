@@ -9,19 +9,19 @@ import java.util.function.UnaryOperator;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JsonMaskingRequestBodyExtractor implements RequestBodyExtractor {
+public class TransformingRequestBodyExtractor implements RequestBodyExtractor {
 
-    private final UnaryOperator<String> masker;
+    private final UnaryOperator<String> transformer;
     private final RequestBodyExtractor extractor;
 
-    public JsonMaskingRequestBodyExtractor(UnaryOperator<String> transformer) {
+    public TransformingRequestBodyExtractor(UnaryOperator<String> transformer) {
         this(transformer, new SimpleRequestBodyExtractor());
     }
 
     @Override
     public String extractBody(HttpServletRequest request) throws IOException {
         String body = extractor.extractBody(request);
-        return masker.apply(body);
+        return transformer.apply(body);
     }
 
 }

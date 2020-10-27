@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class CachedBodyServletInputStreamTest {
@@ -36,6 +38,40 @@ class CachedBodyServletInputStreamTest {
         Throwable error = catchThrowable(() -> stream.setReadListener(listener));
 
         assertThat(error).isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    void shouldReturnFinishedTrueIfStreamAvailableIsZero() throws IOException {
+        InputStream inputStream = mock(InputStream.class);
+        given(inputStream.available()).willReturn(0);
+        ServletInputStream cachedStream = new CachedBodyServletInputStream(inputStream);
+
+        boolean finished = cachedStream.isFinished();
+
+        assertThat(finished).isTrue();
+    }
+
+    @Test
+    void shouldReturnFinishedFalseIfStreamAvailableIsGreaterThanZero() throws IOException {
+        InputStream inputStream = mock(InputStream.class);
+        given(inputStream.available()).willReturn(1);
+        ServletInputStream cachedStream = new CachedBodyServletInputStream(inputStream);
+
+        boolean finished = cachedStream.isFinished();
+
+        assertThat(finished).isFalse();
+    }
+
+    @Test
+    void shouldReturnFinishedFalseIfStreamAvailableThrowsException() throws IOException {
+        InputStream inputStream = mock(InputStream.class);
+        IOException expectedCause = new IOException("error-cause");
+        given(inputStream.available()).willThrow(expectedCause);
+        ServletInputStream cachedStream = new CachedBodyServletInputStream(inputStream);
+
+        boolean finished = cachedStream.isFinished();
+
+        assertThat(finished).isFalse();
     }
 
 }

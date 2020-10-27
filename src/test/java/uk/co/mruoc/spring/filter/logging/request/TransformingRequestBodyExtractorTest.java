@@ -1,7 +1,7 @@
-package uk.co.mruoc.spring.filter.logging.response;
+package uk.co.mruoc.spring.filter.logging.request;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.web.util.ContentCachingResponseWrapper;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 import uk.co.mruoc.json.mask.JsonMasker;
 
 import java.io.IOException;
@@ -11,27 +11,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class JsonMaskingResponseBodyExtractorTest {
+class TransformingRequestBodyExtractorTest {
 
     private final UnaryOperator<String> masker = mock(JsonMasker.class);
-    private final ResponseBodyExtractor extractor = mock(ResponseBodyExtractor.class);
+    private final RequestBodyExtractor extractor = mock(RequestBodyExtractor.class);
 
-    private final ResponseBodyExtractor maskingExtractor = new JsonMaskingResponseBodyExtractor(masker, extractor);
+    private final RequestBodyExtractor maskingExtractor = new TransformingRequestBodyExtractor(masker, extractor);
 
     @Test
     void shouldExtractAndMaskBody() throws IOException {
-        ContentCachingResponseWrapper response = mock(ContentCachingResponseWrapper.class);
-        String body = givenHasBody(response);
+        ContentCachingRequestWrapper request = mock(ContentCachingRequestWrapper.class);
+        String body = givenHasBody(request);
         String expectedMaskedBody = givenBodyMaskedTo(body);
 
-        String maskedBody = maskingExtractor.extractBody(response);
+        String maskedBody = maskingExtractor.extractBody(request);
 
         assertThat(maskedBody).isEqualTo(expectedMaskedBody);
     }
 
-    private String givenHasBody(ContentCachingResponseWrapper response) throws IOException {
+    private String givenHasBody(ContentCachingRequestWrapper request) throws IOException {
         String body = "body";
-        given(extractor.extractBody(response)).willReturn(body);
+        given(extractor.extractBody(request)).willReturn(body);
         return body;
     }
 
