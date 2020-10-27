@@ -18,7 +18,7 @@ plugins {
     id "org.sonarqube" version "3.0"
     id "maven-publish"
     id "com.jfrog.bintray" version "1.8.5"
-    id "com.jfrog.artifactory" version "4.17.2"
+    id "com.jfrog.artifactory" version "4.18.0"
 }
 
 group "com.github.michaelruocco"
@@ -34,6 +34,7 @@ project.version = scmVersion.version
 repositories {
     mavenCentral()
     jcenter()
+    maven { url "https://oss.jfrog.org/artifactory/oss-snapshot-local" }
 }
 
 ext {
@@ -58,13 +59,13 @@ dependencies {
     implementation "org.slf4j:slf4j-api:${slf4jVersion}"
     implementation "commons-io:commons-io:2.8.0"
     implementation "org.apache.commons:commons-collections4:4.4"
-    implementation "com.github.michaelruocco:json-masker:0.1.7"
+    implementation "com.github.michaelruocco:json-masker:1.0.2"
 
     testImplementation "org.springframework.boot:spring-boot-starter-web:${springVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
-    testImplementation "org.assertj:assertj-core:3.17.2"
-    testImplementation "org.mockito:mockito-core:3.5.15"
+    testImplementation "org.assertj:assertj-core:3.18.0"
+    testImplementation "org.mockito:mockito-core:3.6.0"
 
     testFixturesApi "com.github.stefanbirkner:system-lambda:1.1.1"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
@@ -95,8 +96,12 @@ jacocoTestReport {
     }
 }
 
+project.tasks["sonarqube"].dependsOn jacocoTestReport
 sonarqube {
     properties {
+        property "sonar.login", System.getenv("SONARCLOUD_TOKEN")
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.organization", "michaelruocco"
         property "sonar.projectKey", "michaelruocco_spring-filters"
         property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/report.xml"
     }

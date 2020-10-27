@@ -3,8 +3,8 @@ package uk.co.mruoc.spring.filter.logging.request;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Slf4j
@@ -12,8 +12,8 @@ import java.io.IOException;
 public class SimpleRequestBodyExtractor implements RequestBodyExtractor {
 
     @Override
-    public String extractBody(ContentCachingRequestWrapper request) throws IOException {
-        return IOUtils.toString(request.getContentAsByteArray(), request.getCharacterEncoding());
+    public String extractBody(HttpServletRequest request) throws IOException {
+        return IOUtils.toString(request.getInputStream(), request.getCharacterEncoding());
     }
 
 }

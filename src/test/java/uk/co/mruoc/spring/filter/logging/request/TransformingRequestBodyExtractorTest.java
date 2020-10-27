@@ -5,17 +5,18 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import uk.co.mruoc.json.mask.JsonMasker;
 
 import java.io.IOException;
+import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class JsonMaskingRequestBodyExtractorTest {
+class TransformingRequestBodyExtractorTest {
 
-    private final JsonMasker masker = mock(JsonMasker.class);
+    private final UnaryOperator<String> masker = mock(JsonMasker.class);
     private final RequestBodyExtractor extractor = mock(RequestBodyExtractor.class);
 
-    private final RequestBodyExtractor maskingExtractor = new JsonMaskingRequestBodyExtractor(masker, extractor);
+    private final RequestBodyExtractor maskingExtractor = new TransformingRequestBodyExtractor(masker, extractor);
 
     @Test
     void shouldExtractAndMaskBody() throws IOException {
@@ -36,7 +37,7 @@ class JsonMaskingRequestBodyExtractorTest {
 
     private String givenBodyMaskedTo(String body) {
         String maskedBody = "masked-body";
-        given(masker.mask(body)).willReturn(maskedBody);
+        given(masker.apply(body)).willReturn(maskedBody);
         return maskedBody;
     }
 

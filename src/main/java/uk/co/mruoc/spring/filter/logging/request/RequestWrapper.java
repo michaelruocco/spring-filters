@@ -1,15 +1,21 @@
 package uk.co.mruoc.spring.filter.logging.request;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 public class RequestWrapper {
 
-    public ContentCachingRequestWrapper wrap(HttpServletRequest request) {
-        return new ContentCachingRequestWrapper(request);
+    public HttpServletRequest wrapIfHasContent(HttpServletRequest request) {
+        if (hasContent(request)) {
+            return new CachedBodyHttpServletRequestWrapper(request);
+        }
+        return request;
+    }
+
+    private boolean hasContent(HttpServletRequest request) {
+        return request.getContentLength() > -1;
     }
 
 }
