@@ -61,7 +61,7 @@ jobs:
         env:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-        run: ./gradlew artifactoryPublish -Dbuild.number=$GITHUB_RUN_NUMBER
+        run: ./gradlew artifactoryPublish -Dbuild.number=$GITHUB_RUN_ID-$GITHUB_RUN_NUMBER
 
       - name: Release
         if: github.ref == 'refs/heads/master'
