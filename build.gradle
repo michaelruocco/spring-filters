@@ -45,7 +45,7 @@ ext {
     junitVersion = "5.7.0"
     junitPioneerVersion = "1.0.0"
     mockitoVersion = "3.5.13"
-    springVersion = "2.3.4.RELEASE"
+    springVersion = "2.3.5.RELEASE"
 }
 
 dependencies {
@@ -99,7 +99,6 @@ jacocoTestReport {
 project.tasks["sonarqube"].dependsOn jacocoTestReport
 sonarqube {
     properties {
-        property "sonar.login", System.getenv("SONARCLOUD_TOKEN")
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.organization", "michaelruocco"
         property "sonar.projectKey", "michaelruocco_spring-filters"
