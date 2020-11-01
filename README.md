@@ -1,6 +1,6 @@
 # Spring Filters
 
-[![Build](https://github.com/michaelruocco/spring-filters/workflows/build/badge.svg)](https://github.com/michaelruocco/spring-filters/actions)
+[![Build](https://github.com/michaelruocco/spring-filters/workflows/pipeline/badge.svg)](https://github.com/michaelruocco/spring-filters/actions)
 [![codecov](https://codecov.io/gh/michaelruocco/spring-filters/branch/master/graph/badge.svg?token=oqKun1zNII)](https://codecov.io/gh/michaelruocco/spring-filters)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/84c95c60c3ff49fd8bba6c63a68efcd8)](https://www.codacy.com/gh/michaelruocco/spring-filters/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/spring-filters&amp;utm_campaign=Badge_Grade)
 [![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/spring-filters?branch=master)](https://bettercodehub.com/results/michaelruocco/spring-filters)
@@ -20,9 +20,9 @@ This library contains filters which can be useful when building restful web appl
 ```gradle
 // cleans build directories
 // prints currentVersion
+// checks dependency versions
 // formats code
 // builds code
 // runs tests
-// checks dependency versions
-./gradlew clean currentVersion spotlessApply build dependencyUpdates
+./gradlew clean currentVersion dependencyUpdates spotlessApply build  
 ```
