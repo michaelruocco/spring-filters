@@ -45,7 +45,7 @@ ext {
     junitVersion = "5.7.0"
     junitPioneerVersion = "1.0.0"
     mockitoVersion = "3.5.13"
-    springVersion = "2.3.4.RELEASE"
+    springVersion = "2.3.5.RELEASE"
 }
 
 dependencies {
