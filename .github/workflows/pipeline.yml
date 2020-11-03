@@ -1,4 +1,4 @@
-name: build
+name: pipeline
 
 on:
   push:
@@ -19,6 +19,13 @@ jobs:
         with:
           java-version: 11
 
+      - name: Setup SonarCloud Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
       - name: Setup Gradle Cache
         uses: actions/cache@v2
         with:
@@ -27,7 +34,7 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle
 
       - name: Print Current Version
         run: ./gradlew currentVersion
@@ -36,7 +43,7 @@ jobs:
         run: ./gradlew dependencyUpdates
 
       - name: Build
-        run: ./gradlew clean spotlessCheck build -x test
+        run: ./gradlew clean spotlessCheck assemble
 
       - name: Test
         run: ./gradlew test
