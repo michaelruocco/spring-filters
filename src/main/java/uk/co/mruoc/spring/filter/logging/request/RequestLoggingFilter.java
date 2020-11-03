@@ -20,6 +20,10 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
     private final RequestHeaderExtractor extractor;
     private final RequestBodyExtractor bodyExtractor;
 
+    public RequestLoggingFilter() {
+        this(new SimpleRequestBodyExtractor());
+    }
+
     public RequestLoggingFilter(RequestBodyExtractor bodyExtractor) {
         this(new RequestWrapper(), new RequestHeaderExtractor(), bodyExtractor);
     }
