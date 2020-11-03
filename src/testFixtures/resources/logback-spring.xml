@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <springProperty scope="context" name="demoApplication" source="spring.application.name"/>
+
+    <appender name="standardAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%X{request-method}:%X{request-uri}:%X{transformed-request-uri}:%X{request-duration}:%X{request-status}:%X{example-header}] %-5level %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>logs/test.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>[%X{request-method}:%X{request-uri}:%X{transformed-request-uri}:%X{request-duration}:%X{request-status}:%X{example-header}] %-5level %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="standardAppender"/>
+        <appender-ref ref="fileAppender"/>
+    </root>
+</configuration>

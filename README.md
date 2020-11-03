@@ -23,6 +23,7 @@ This library contains filters which can be useful when building restful web appl
 // checks dependency versions
 // formats code
 // builds code
-// runs tests
-./gradlew clean currentVersion dependencyUpdates spotlessApply build  
+// runs unit tests
+// runs integration tests
+./gradlew clean currentVersion dependencyUpdates spotlessApply build integrationTest
 ```
