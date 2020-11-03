@@ -1,4 +1,4 @@
-package uk.co.mruoc.spring.filter.logging.header;
+package uk.co.mruoc.spring.filter.logging.mdc;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.MDC;

@@ -1,4 +1,4 @@
-package uk.co.mruoc.spring.filter.logging.header;
+package uk.co.mruoc.spring.filter.logging.mdc;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
