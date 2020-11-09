@@ -13,7 +13,36 @@
 
 ## Overview
 
-This library contains filters which can be useful when building restful web applications in spring boot
+This library contains filters which can be useful when building restful web applications in spring boot. There
+are filters that provide the following functionality:
+
+*   Validating whether mandatory request headers have been provided
+
+*   Validating whether request headers match a specified regex format
+
+*   Adding common request parameters into the Mapped Diagnostic Context (MDC) including, request-method, request-uri, 
+    request-duration and request-status
+
+*   Adding specified request headers into the Mapped Diagnostic Context (MDC)
+
+*   Clearing the Mapped Diagnostic Context (MDC) once a request has completed
+
+*   Logging request body
+
+*   Logging response body
+
+*   Logging request body with transformations applied (e.g. masking specific json values within the payload)
+
+*   Logging response body with transformations applied (e.g. masking specific json values within the payload)
+
+The functionality for masking payloads uses this [JSON Masker](https://github.com/michaelruocco/json-masker) library.
+The integration tests for this repository make use of a demo application which can be found in the testFixtures module
+that gives examples of how each of these filters can be used. More detailed explanations with examples can be found
+below.
+
+### Examples
+
+
 
 ## Useful Commands
 
