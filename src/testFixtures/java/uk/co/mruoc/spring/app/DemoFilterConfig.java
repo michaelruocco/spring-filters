@@ -5,6 +5,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import uk.co.mruoc.clock.FixedTimesClock;
 import uk.co.mruoc.json.mask.JsonMasker;
 import uk.co.mruoc.json.mask.JsonPathFactory;
@@ -17,6 +18,8 @@ import uk.co.mruoc.spring.filter.logging.response.ResponseLoggingFilter;
 import uk.co.mruoc.spring.filter.logging.response.TransformingResponseBodyExtractor;
 import uk.co.mruoc.spring.filter.logging.uritransform.TransformRequestUriMdcPopulatorFilter;
 import uk.co.mruoc.spring.filter.logging.uritransform.UuidIdStringTransformer;
+import uk.co.mruoc.spring.filter.validation.HeaderValidationFilter;
+import uk.co.mruoc.spring.filter.validation.validator.CorrelationIdHeaderValidator;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -108,6 +111,16 @@ public class DemoFilterConfig {
         bean.setOrder(2);
         bean.addUrlPatterns(ENDPOINT3);
         bean.setName("maskingResponseLoggingFilter");
+        return bean;
+    }
+
+    @Bean
+    public FilterRegistrationBean<HeaderValidationFilter> mandatoryHeaderFilter(HandlerExceptionResolver handlerExceptionResolver) {
+        FilterRegistrationBean<HeaderValidationFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new HeaderValidationFilter(new CorrelationIdHeaderValidator(), handlerExceptionResolver));
+        bean.setOrder(1);
+        bean.addUrlPatterns("/header-endpoint");
+        bean.setName("mandatoryHeaderFilter");
         return bean;
     }
 

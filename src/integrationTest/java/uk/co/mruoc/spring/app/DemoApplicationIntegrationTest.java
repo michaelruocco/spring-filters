@@ -13,6 +13,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import uk.co.mruoc.file.line.LineLoader;
 
 import java.io.File;
@@ -20,6 +21,7 @@ import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,8 +65,8 @@ public class DemoApplicationIntegrationTest {
         assertContainsLineStartingWith(lines, "[GET:/endpoint1::::] INFO  received-request::headers:{connection=[keep-alive], host=[localhost:");
         assertContainsLineEndingWith(lines, "], accept=[text/plain, application/json, application/*+json, */*]}");
         assertThat(lines).contains(
-                "[GET:/endpoint1::::] INFO  log message from get hello controller",
-                "[GET:/endpoint1::::] INFO  returned-response:Greetings from Spring Boot!:headers:{}",
+                "[GET:/endpoint1::::] INFO  log message from /endpoint controller",
+                "[GET:/endpoint1::::] INFO  returned-response:Greetings from /endpoint1:headers:{}",
                 lastExpectedLog
         );
     }
@@ -79,7 +81,7 @@ public class DemoApplicationIntegrationTest {
 
         template.exchange(url, HttpMethod.GET, entity, String.class);
 
-        String expectedLog = "[::/endpoint2/{id}:::example-value] INFO  log message from get by id hello controller dbdb1bd4-d621-4507-b687-6868225c719f";
+        String expectedLog = "[::/endpoint2/{id}:::example-value] INFO  log message from /endpoint2 controller with id dbdb1bd4-d621-4507-b687-6868225c719f";
         waitForLog(expectedLog);
 
         List<String> lines = loadLogLines();
@@ -100,6 +102,29 @@ public class DemoApplicationIntegrationTest {
         assertContainsLineStartingWith(lines, "[:::::] INFO  received-request:{\"maskedRequest\":\"*************\"}:headers:{content-length=[33], connection=[keep-alive], host=[localhost:");
         assertContainsLineEndingWith(lines, "], content-type=[text/plain;charset=UTF-8], accept=[text/plain, application/json, application/*+json, */*]}");
         assertThat(lines).contains(expectedLog);
+    }
+
+    @Test
+    public void shouldReturnAnErrorIfMandatoryHeaderNotProvided() {
+        String url = String.format("%s/header-endpoint", baseUrl);
+
+        ResponseEntity<String> response = template.getForEntity(url, String.class);
+
+        assertThat(response.getStatusCodeValue()).isEqualTo(400);
+        assertThat(response.getBody()).isEqualTo("mandatory header correlation-id not provided");
+    }
+
+    @Test
+    public void shouldReturnSuccessfulResultIfMandatoryHeaderProvided() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("Correlation-ID", Collections.singletonList(UUID.randomUUID().toString()));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        String url = String.format("%s/header-endpoint", baseUrl);
+
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.GET, entity, String.class);
+
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(response.getBody()).isEqualTo("Greetings from /header-endpoint");
     }
 
     private void waitForLog(String expectedLog) {
