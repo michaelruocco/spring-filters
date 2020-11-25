@@ -5,6 +5,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import uk.co.mruoc.clock.FixedTimesClock;
 import uk.co.mruoc.json.mask.JsonMasker;
 import uk.co.mruoc.json.mask.JsonPathFactory;
@@ -15,8 +16,11 @@ import uk.co.mruoc.spring.filter.logging.request.RequestLoggingFilter;
 import uk.co.mruoc.spring.filter.logging.request.TransformingRequestBodyExtractor;
 import uk.co.mruoc.spring.filter.logging.response.ResponseLoggingFilter;
 import uk.co.mruoc.spring.filter.logging.response.TransformingResponseBodyExtractor;
+import uk.co.mruoc.spring.filter.rewrite.RewriteResponseBodyFilter;
 import uk.co.mruoc.spring.filter.logging.uritransform.TransformRequestUriMdcPopulatorFilter;
 import uk.co.mruoc.spring.filter.logging.uritransform.UuidIdStringTransformer;
+import uk.co.mruoc.spring.filter.validation.HeaderValidationFilter;
+import uk.co.mruoc.spring.filter.validation.validator.CorrelationIdHeaderValidator;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -27,6 +31,7 @@ public class DemoFilterConfig {
     private static final String ENDPOINT1 = "/endpoint1";
     private static final String ENDPOINT2 = "/endpoint2/*";
     private static final String ENDPOINT3 = "/endpoint3";
+    private static final String ENDPOINT4 = "/endpoint4";
 
     private static final Instant NOW = Instant.now();
     private static final Duration DURATION = Duration.ofMillis(15);
@@ -58,7 +63,7 @@ public class DemoFilterConfig {
         FilterRegistrationBean<ResponseLoggingFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new ResponseLoggingFilter());
         bean.setOrder(3);
-        bean.addUrlPatterns(ENDPOINT1);
+        bean.addUrlPatterns(ENDPOINT1, ENDPOINT4);
         bean.setName("responseLoggingFilter");
         return bean;
     }
@@ -108,6 +113,26 @@ public class DemoFilterConfig {
         bean.setOrder(2);
         bean.addUrlPatterns(ENDPOINT3);
         bean.setName("maskingResponseLoggingFilter");
+        return bean;
+    }
+
+    @Bean
+    public FilterRegistrationBean<RewriteResponseBodyFilter> rewriteResponseFilter() {
+        FilterRegistrationBean<RewriteResponseBodyFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new RewriteResponseBodyFilter(new DemoRewriteResponseBody()));
+        bean.setOrder(2);
+        bean.addUrlPatterns(ENDPOINT4);
+        bean.setName("rewriteResponseFilter");
+        return bean;
+    }
+
+    @Bean
+    public FilterRegistrationBean<HeaderValidationFilter> mandatoryHeaderFilter(HandlerExceptionResolver handlerExceptionResolver) {
+        FilterRegistrationBean<HeaderValidationFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new HeaderValidationFilter(new CorrelationIdHeaderValidator(), handlerExceptionResolver));
+        bean.setOrder(1);
+        bean.addUrlPatterns("/header-endpoint");
+        bean.setName("mandatoryHeaderFilter");
         return bean;
     }
 

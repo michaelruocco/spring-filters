@@ -15,20 +15,31 @@ public class DemoController {
 
     @GetMapping("/endpoint1")
     public String get() {
-        log.info("log message from get hello controller");
-        return "Greetings from Spring Boot!";
+        log.info("log message from /endpoint controller");
+        return "Greetings from /endpoint1";
     }
 
     @GetMapping("/endpoint2/{id}")
     public String get(@PathVariable("id") UUID id) {
-        log.info("log message from get by id hello controller {}", id);
-        return String.format("Greetings from Spring Boot! %s", id);
+        log.info("log message from /endpoint2 controller with id {}", id);
+        return String.format("Greetings from /endpoint2 with id %s", id);
     }
 
     @PostMapping("/endpoint3")
-    public String post(@RequestBody String body) {
-        log.info("log message from post hello controller {}", body);
+    public String postForMaskedResponse(@RequestBody String body) {
+        log.info("log message from /endpoint3 controller {}", body);
         return String.format("{\"maskedResponse\":%s}", body);
+    }
+
+    @PostMapping("/endpoint4")
+    public String postForRewrittenResponse(@RequestBody String body) {
+        log.info("log message from /endpoint4 controller {}", body);
+        return "{\"responseValue\":\"originalValue\"}";
+    }
+
+    @GetMapping("/header-endpoint")
+    public String getWithHeader() {
+        return "Greetings from /header-endpoint";
     }
 
 }

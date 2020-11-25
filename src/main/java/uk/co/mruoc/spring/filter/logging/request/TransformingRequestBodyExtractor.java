@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.function.UnaryOperator;
 
 @Slf4j
@@ -19,7 +18,7 @@ public class TransformingRequestBodyExtractor implements RequestBodyExtractor {
     }
 
     @Override
-    public String extractBody(HttpServletRequest request) throws IOException {
+    public String extractBody(HttpServletRequest request) {
         String body = extractor.extractBody(request);
         return transformer.apply(body);
     }

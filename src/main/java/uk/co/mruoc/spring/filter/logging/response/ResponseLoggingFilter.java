@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 import uk.co.mruoc.spring.filter.HeaderAdapter;
+import uk.co.mruoc.spring.filter.ResponseWrapper;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,11 +33,11 @@ public class ResponseLoggingFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
-        ContentCachingResponseWrapper wrappedResponse = wrapper.wrap(response);
+        ContentCachingResponseWrapper cachedResponse = wrapper.toCachingResponseWrapper(response);
         try {
-            chain.doFilter(request, wrappedResponse);
+            chain.doFilter(request, cachedResponse);
         } finally {
-            logResponse(wrappedResponse);
+            logResponse(cachedResponse);
         }
     }
 

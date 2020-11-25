@@ -3,6 +3,7 @@ package uk.co.mruoc.spring.filter.logging.response;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 import uk.co.mruoc.spring.filter.HeaderAdapter;
+import uk.co.mruoc.spring.filter.ResponseWrapper;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -59,7 +60,7 @@ class ResponseLoggingFilterTest {
 
     private ContentCachingResponseWrapper givenWrapped(HttpServletResponse response) {
         ContentCachingResponseWrapper wrapped = mock(ContentCachingResponseWrapper.class);
-        given(wrapper.wrap(response)).willReturn(wrapped);
+        given(wrapper.toCachingResponseWrapper(response)).willReturn(wrapped);
         return wrapped;
     }
 
