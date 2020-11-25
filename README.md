@@ -35,6 +35,8 @@ are filters that provide the following functionality:
 
 *   Logging response body with transformations applied (e.g. masking specific json values within the payload)
 
+*   Rewriting response body
+
 The functionality for masking payloads uses this [JSON Masker](https://github.com/michaelruocco/json-masker) library.
 The integration tests for this repository make use of a demo application which can be found in the testFixtures module
 that gives examples of how each of these filters can be used. More detailed explanations with examples can be found
@@ -117,6 +119,22 @@ JsonMasker masker = JsonMasker.builder()
 Filter filter = new RequestLoggingFilter(new TransformingRequestBodyExtractor(masker)));
 ```
 
+#### Rewriting Response Body
+
+The RewriteResponseBodyFilter can be used to change / modify the response body. The filter accepts a class
+that implements the RewriteResponseBody interface, which extends the Function interface. The input argument is
+a RewriteResponseBodyRequest which contains both the original request and original response. The reason for this
+is that it gives the logic that you rewrite to perform the rewrite access to the request body, request method, request
+parameters, and the response body and response status. Once you implement the RewriteResponseBody interface with
+your logic to rewrite the response body you simple pass that to the filter and configure it into your application.
+If you want to log the rewritten response body you can do that from your implementation class too. The demo application
+used in the integration tests contains a working example to follow. This is created by doing the following:
+
+```java
+RewriteResponseBody rewriteFunction = new DemoRewriteResponseBody();
+Filter filter = new RewriteResponseBodyFilter(rewriteFunction);
+```
+
 ## Useful Commands
 
 ```gradle
@@ -127,5 +145,5 @@ Filter filter = new RequestLoggingFilter(new TransformingRequestBodyExtractor(ma
 // builds code
 // runs unit tests
 // runs integration tests
-./gradlew clean currentVersion dependencyUpdates spotlessApply build integrationTest
+./gradlew clean currentVersion dependencyUpdates spotlessApply lintGradle build integrationTest
 ```

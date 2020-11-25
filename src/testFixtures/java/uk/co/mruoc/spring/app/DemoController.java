@@ -26,9 +26,15 @@ public class DemoController {
     }
 
     @PostMapping("/endpoint3")
-    public String post(@RequestBody String body) {
+    public String postForMaskedResponse(@RequestBody String body) {
         log.info("log message from /endpoint3 controller {}", body);
         return String.format("{\"maskedResponse\":%s}", body);
+    }
+
+    @PostMapping("/endpoint4")
+    public String postForRewrittenResponse(@RequestBody String body) {
+        log.info("log message from /endpoint4 controller {}", body);
+        return "{\"responseValue\":\"originalValue\"}";
     }
 
     @GetMapping("/header-endpoint")

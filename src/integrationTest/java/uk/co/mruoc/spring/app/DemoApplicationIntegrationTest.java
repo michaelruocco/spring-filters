@@ -105,6 +105,28 @@ public class DemoApplicationIntegrationTest {
     }
 
     @Test
+    public void shouldRewriteResponsePayloadIfRewriteFlagIsTrue() {
+        String url = String.format("%s/endpoint4", baseUrl);
+        HttpEntity<String> entity = new HttpEntity<>("{\"rewrite\":true}");
+
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.POST, entity, String.class);
+
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(response.getBody()).isEqualTo("{\"responseValue\":\"rewrittenValue\"}");
+    }
+
+    @Test
+    public void shouldNotRewriteResponsePayloadIfRewriteFlagIsFalse() {
+        String url = String.format("%s/endpoint4", baseUrl);
+        HttpEntity<String> entity = new HttpEntity<>("{\"rewrite\":false}");
+
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.POST, entity, String.class);
+
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(response.getBody()).isEqualTo("{\"responseValue\":\"originalValue\"}");
+    }
+
+    @Test
     public void shouldReturnAnErrorIfMandatoryHeaderNotProvided() {
         String url = String.format("%s/header-endpoint", baseUrl);
 
