@@ -39,7 +39,7 @@ public class HeaderMdcPopulatorFilter extends OncePerRequestFilter {
 
     private void populateMdcIfPresent(String name, HeaderAdapter headers) {
         String value = headers.getAsString(name);
-        if (StringUtils.isEmpty(value)) {
+        if (StringUtils.hasLength(value)) {
             return;
         }
         MDC.put(name.toLowerCase(), value);

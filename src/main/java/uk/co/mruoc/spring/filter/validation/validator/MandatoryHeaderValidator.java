@@ -15,7 +15,7 @@ public class MandatoryHeaderValidator implements HeaderValidator {
     @Override
     public Collection<String> toErrors(HeaderAdapter headers) {
         String value = headers.getAsString(name);
-        if (StringUtils.isEmpty(value)) {
+        if (StringUtils.hasLength(value)) {
             return Collections.singleton(toMessage(name));
         }
         return Collections.emptyList();
