@@ -69,9 +69,23 @@ class CapturingResponseTest {
     }
 
     @Test
-    void shouldReturnBodyAsString() throws IOException {
+    void shouldReturnBodyAsStringAfterGettingWriter() throws IOException {
         String expectedBody = "test-body";
+        capturingResponse.getWriter();
         body.writeBytes(expectedBody.getBytes());
+        capturingResponse.flushBuffer();
+
+        String body = capturingResponse.getBodyAsString();
+
+        assertThat(body).isEqualTo(expectedBody);
+    }
+
+    @Test
+    void shouldReturnBodyAsStringAfterGettingOutputStream() throws IOException {
+        String expectedBody = "test-body";
+        capturingResponse.getOutputStream();
+        body.writeBytes(expectedBody.getBytes());
+        capturingResponse.flushBuffer();
 
         String body = capturingResponse.getBodyAsString();
 
