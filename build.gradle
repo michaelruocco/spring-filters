@@ -71,7 +71,7 @@ dependencies {
     testImplementation "org.assertj:assertj-core:3.18.1"
     testImplementation "org.mockito:mockito-core:3.6.28"
 
-    integrationTestImplementation "org.springframework:spring-test:5.3.0"
+    integrationTestImplementation "org.springframework:spring-test:5.3.1"
     integrationTestImplementation "org.springframework.boot:spring-boot-test:${springBootVersion}"
     integrationTestImplementation "com.github.michaelruocco:file-loader:6.0.1"
     integrationTestImplementation "org.awaitility:awaitility:4.0.3"
