@@ -18,9 +18,9 @@ import uk.co.mruoc.spring.filter.logging.response.ResponseLoggingFilter;
 import uk.co.mruoc.spring.filter.logging.response.TransformingResponseBodyExtractor;
 import uk.co.mruoc.spring.filter.rewrite.RewriteResponseBodyFilter;
 import uk.co.mruoc.spring.filter.logging.uritransform.TransformRequestUriMdcPopulatorFilter;
-import uk.co.mruoc.spring.filter.logging.uritransform.UuidIdStringTransformer;
 import uk.co.mruoc.spring.filter.validation.HeaderValidationFilter;
 import uk.co.mruoc.spring.filter.validation.validator.CorrelationIdHeaderValidator;
+import uk.co.mruoc.string.transform.UuidIdStringTransformer;
 
 import java.time.Duration;
 import java.time.Instant;

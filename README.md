@@ -145,5 +145,5 @@ Filter filter = new RewriteResponseBodyFilter(rewriteFunction);
 // builds code
 // runs unit tests
 // runs integration tests
-./gradlew clean currentVersion dependencyUpdates spotlessApply lintGradle build integrationTest
+./gradlew clean currentVersion dependencyUpdates spotlessApply build integrationTest
 ```
