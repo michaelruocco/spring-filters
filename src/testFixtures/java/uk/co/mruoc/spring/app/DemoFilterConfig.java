@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import uk.co.mruoc.clock.FixedTimesClock;
 import uk.co.mruoc.json.mask.JsonMasker;
 import uk.co.mruoc.json.mask.JsonPathFactory;
 import uk.co.mruoc.spring.filter.logging.mdc.ClearMdcFilter;
@@ -21,7 +20,9 @@ import uk.co.mruoc.spring.filter.logging.uritransform.TransformRequestUriMdcPopu
 import uk.co.mruoc.spring.filter.validation.HeaderValidationFilter;
 import uk.co.mruoc.spring.filter.validation.validator.CorrelationIdHeaderValidator;
 import uk.co.mruoc.string.transform.UuidIdStringTransformer;
+import uk.co.mruoc.test.clock.PreConfiguredClock;
 
+import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 
@@ -36,7 +37,7 @@ public class DemoFilterConfig {
     private static final Instant NOW = Instant.now();
     private static final Duration DURATION = Duration.ofMillis(15);
 
-    private final FixedTimesClock clock = new FixedTimesClock(NOW, NOW.plus(DURATION));
+    private final Clock clock = new PreConfiguredClock(NOW, NOW.plus(DURATION));
 
     @Bean
     public FilterRegistrationBean<RequestMdcPopulatorFilter> requestMdcPopulator() {

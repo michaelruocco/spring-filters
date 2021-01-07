@@ -4,13 +4,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
-import uk.co.mruoc.clock.FixedTimesClock;
 import uk.co.mruoc.logging.LogOutputUtils;
+import uk.co.mruoc.test.clock.PreConfiguredClock;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Collection;
@@ -30,7 +31,7 @@ class RequestMdcPopulatorFilterTest {
     private final HttpServletResponse response = mock(HttpServletResponse.class);
     private final FilterChain chain = mock(FilterChain.class);
 
-    private final FixedTimesClock clock = new FixedTimesClock(NOW, NOW.plus(DURATION));
+    private final Clock clock = new PreConfiguredClock(NOW, NOW.plus(DURATION));
     private final Filter filter = new RequestMdcPopulatorFilter(clock);
 
     @BeforeEach

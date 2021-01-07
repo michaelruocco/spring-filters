@@ -12,13 +12,13 @@ plugins {
     id "java-library"
     id "java-test-fixtures"
     id "jacoco"
-    id "com.diffplug.spotless" version "5.8.2"
+    id "com.diffplug.spotless" version "5.9.0"
     id "com.github.ben-manes.versions" version "0.36.0"
     id "pl.allegro.tech.build.axion-release" version "1.12.1"
     id "org.sonarqube" version "3.0"
     id "maven-publish"
     id "com.jfrog.bintray" version "1.8.5"
-    id "com.jfrog.artifactory" version "4.18.2"
+    id "com.jfrog.artifactory" version "4.18.3"
     id "org.unbroken-dome.test-sets" version "3.0.1"
 }
 
@@ -48,7 +48,6 @@ ext {
 
     junitVersion = "5.7.0"
     junitPioneerVersion = "1.0.0"
-    mockitoVersion = "3.5.13"
     springBootVersion = "2.4.1"
 }
 
@@ -60,7 +59,7 @@ dependencies {
 
     compileOnly "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 
-    api "com.github.michaelruocco:json-masker:1.0.5"
+    api "com.github.michaelruocco:json-masker:1.0.6"
     implementation "org.slf4j:slf4j-api:${slf4jVersion}"
     implementation "commons-io:commons-io:2.8.0"
     implementation "org.apache.commons:commons-collections4:4.4"
@@ -69,7 +68,7 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testImplementation "org.assertj:assertj-core:3.18.1"
-    testImplementation "org.mockito:mockito-core:3.6.28"
+    testImplementation "org.mockito:mockito-core:3.7.0"
 
     integrationTestImplementation "org.springframework:spring-test:5.3.2"
     integrationTestImplementation "org.springframework.boot:spring-boot-test:${springBootVersion}"
@@ -78,7 +77,8 @@ dependencies {
 
     testFixturesApi "com.github.stefanbirkner:system-lambda:1.1.1"
     testFixturesApi "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-    testFixturesApi "com.github.michaelruocco:string-utils:0.1.1"
+    testFixturesApi "com.github.michaelruocco:string-utils:0.1.2"
+    testFixturesApi "com.github.michaelruocco:testing-clocks:0.1.1"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesCompileOnly "org.slf4j:slf4j-simple:${slf4jVersion}"
     testFixturesCompileOnly "com.jayway.jsonpath:json-path:2.5.0"
