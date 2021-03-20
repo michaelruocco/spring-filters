@@ -1,13 +1,13 @@
 package uk.co.mruoc.logging;
 
-import com.github.stefanbirkner.systemlambda.Statement;
 import lombok.extern.slf4j.Slf4j;
+import uk.org.webcompere.systemstubs.ThrowingRunnable;
+import uk.org.webcompere.systemstubs.stream.SystemOut;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
+import static uk.org.webcompere.systemstubs.SystemStubs.tapSystemOut;
 
 @Slf4j
 public class LogOutputUtils {
@@ -16,9 +16,10 @@ public class LogOutputUtils {
         // utility class
     }
 
-    public static Collection<String> captureLogLines(Statement statement) throws Exception {
-        String[] logLines = tapSystemOut(statement).split(System.lineSeparator());
-        return Arrays.stream(logLines).collect(Collectors.toList());
+    public static Collection<String> captureLogLines(ThrowingRunnable runnable) throws Exception {
+        SystemOut systemOut = new SystemOut();
+        systemOut.execute(runnable);
+        return systemOut.getLines().collect(Collectors.toList());
     }
 
     public static String generateLogOutput() throws Exception {
