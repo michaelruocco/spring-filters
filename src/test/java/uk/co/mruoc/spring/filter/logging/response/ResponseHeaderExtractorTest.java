@@ -36,4 +36,18 @@ class ResponseHeaderExtractorTest {
         assertThat(extracted.get(NAME_2)).containsExactly(VALUE_3);
     }
 
+    @Test
+    void shouldExtractResponseHeadersIfDuplicateHeadersWithTheSameValue() {
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        given(response.getHeaderNames()).willReturn(Arrays.asList(NAME_1, NAME_1));
+        given(response.getHeaders(NAME_1))
+                .willReturn(Arrays.asList(VALUE_1, VALUE_2))
+                .willReturn(Arrays.asList(VALUE_2, VALUE_3));
+
+        HeaderAdapter extracted = extractor.extractHeaders(response);
+
+        assertThat(extracted.size()).isEqualTo(1);
+        assertThat(extracted.get(NAME_1)).containsExactlyInAnyOrder(VALUE_1, VALUE_2, VALUE_3);
+    }
+
 }
