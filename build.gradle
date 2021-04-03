@@ -15,9 +15,9 @@ plugins {
     id "maven-publish"
     id "signing"
     id "io.codearte.nexus-staging" version "0.30.0"
-    id "com.diffplug.spotless" version "5.11.0"
+    id "com.diffplug.spotless" version "5.11.1"
     id "com.github.ben-manes.versions" version "0.38.0"
-    id "pl.allegro.tech.build.axion-release" version "1.12.1"
+    id "pl.allegro.tech.build.axion-release" version "1.13.1"
     id "org.sonarqube" version "3.1.1"
     id "org.unbroken-dome.test-sets" version "3.0.1"
 }
@@ -31,7 +31,7 @@ group "com.github.michaelruocco"
 scmVersion {
     versionCreator "versionWithBranch"
     tag {
-        prefix = "spring-filters"
+        prefix = "spring-filters-"
     }
 }
 project.version = scmVersion.version
@@ -43,7 +43,7 @@ repositories {
 
 ext {
     slf4jVersion = "1.7.30"
-    lombokVersion = "1.18.18"
+    lombokVersion = "1.18.20"
     jacksonVersion = "2.11.3"
 
     junitVersion = "5.7.1"
@@ -59,7 +59,7 @@ dependencies {
 
     compileOnly "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 
-    api "com.github.michaelruocco:json-masker:1.0.6"
+    api "com.github.michaelruocco:json-masker:1.0.7"
     implementation "org.slf4j:slf4j-api:${slf4jVersion}"
     implementation "commons-io:commons-io:2.8.0"
     implementation "org.apache.commons:commons-collections4:4.4"
@@ -77,7 +77,7 @@ dependencies {
 
     testFixturesApi "uk.org.webcompere:system-stubs-core:1.2.0"
     testFixturesApi "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-    testFixturesApi "com.github.michaelruocco:string-utils:0.1.4"
+    testFixturesApi "com.github.michaelruocco:string-utils:0.1.5"
     testFixturesApi "com.github.michaelruocco:testing-clocks:0.1.4"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesCompileOnly "org.slf4j:slf4j-simple:${slf4jVersion}"
