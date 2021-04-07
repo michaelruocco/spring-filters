@@ -18,7 +18,6 @@ import java.io.PrintWriter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -55,7 +54,7 @@ class RewriteResponseBodyFilterTest {
 
         filter.doFilter(request, response, chain);
 
-        verify(chain).doFilter(eq(wrappedRequest), eq(null));
+        verify(chain).doFilter(wrappedRequest, null);
         ArgumentCaptor<RewriteResponseBodyRequest> captor = ArgumentCaptor.forClass(RewriteResponseBodyRequest.class);
         verify(rewriteBody).apply(captor.capture());
         RewriteResponseBodyRequest rewriteRequest = captor.getValue();
@@ -69,7 +68,7 @@ class RewriteResponseBodyFilterTest {
 
         filter.doFilter(request, response, chain);
 
-        verify(chain).doFilter(eq(null), eq(capturingResponse));
+        verify(chain).doFilter(null, capturingResponse);
         ArgumentCaptor<RewriteResponseBodyRequest> captor = ArgumentCaptor.forClass(RewriteResponseBodyRequest.class);
         verify(rewriteBody).apply(captor.capture());
         RewriteResponseBodyRequest rewriteRequest = captor.getValue();
